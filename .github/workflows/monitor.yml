@@ -14,7 +14,8 @@ jobs:
 
       - run: pip install requests pandas
 
-      - run: python watcher.py
+      - name: Run watcher
         env:
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: python watcher.py
