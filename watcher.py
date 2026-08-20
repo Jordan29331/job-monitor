@@ -7,8 +7,6 @@ employers = pd.read_csv("employers.csv")
 
 employers = employers.dropna(subset=["url"])
 
-print(employers)
-
 results = {}
 
 for _, row in employers.iterrows():
