@@ -20,6 +20,9 @@ for _, row in employers.iterrows():
     except Exception as e:
         print(f"Error: {e}")
 
+with open("current.json", "w") as f:
+    json.dump(results, f)
+
 if os.path.exists("previous.json"):
 
     with open("previous.json") as f:
