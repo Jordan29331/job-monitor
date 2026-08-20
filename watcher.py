@@ -2,6 +2,8 @@ import requests
 import pandas as pd
 import json
 import os
+import smtplib
+from email.message import EmailMessage
 
 employers = pd.read_csv("employers.csv")
 
@@ -43,6 +45,29 @@ print("\nChanges Detected:")
 
 for company in changes:
     print(company)
+
+# SEND EMAIL IF CHANGES FOUND
+if changes:
+
+    email = os.environ["EMAIL_ADDRESS"]
+    password = os.environ["EMAIL_PASSWORD"]
+
+    msg = EmailMessage()
+
+    msg["Subject"] = "Job Monitor Update"
+    msg["From"] = email
+    msg["To"] = email
+
+    body = "Changes detected:\n\n"
+
+    for company in changes:
+        body += f"{company}\n"
+
+    msg.set_content(body)
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login(email, password)
+        smtp.send_message(msg)
 
 with open("previous.json", "w") as f:
     json.dump(results, f)
